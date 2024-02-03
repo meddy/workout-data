@@ -5,7 +5,9 @@ function App() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [tokenExpiration, setTokenExpiration] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [documentId, setDocumentId] = useState<string>("");
+  const [documentId, setDocumentId] = useState<string>(
+    window.localStorage.getItem("documentId") ?? ""
+  );
   const [documentContent, setDocumentContent] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,11 +39,14 @@ function App() {
 
   const onFetchDocument = () => {
     setDocumentContent(null);
+
     if (!accessToken) {
       authorize();
     } else {
       fetchDocument(accessToken);
     }
+
+    window.localStorage.setItem("documentId", documentId);
   };
 
   const fetchDocument = async (accessToken: string) => {

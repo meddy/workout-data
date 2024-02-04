@@ -68,6 +68,7 @@ function App() {
   const onLoadDoc = () => {
     setLoading(true);
     setDocumentContent(null);
+    setError(null);
 
     if (!accessToken) {
       authorize();

@@ -1,6 +1,6 @@
 import { ExerciseHistoryProps } from "./ExerciseHistory";
 
-const dateRegex = /(?<date>\d\d?\/\d\d\/\d\d\d\d)\s*-\s*(?<workout>.*)/;
+const dateRegex = /(?<date>\d\d?\/\d\d?\/\d\d\d\d)\s*-\s*(?<workout>.*)/;
 const exerciseRegex = /(?<exercise>[\s\w]+)\s*-\s*(?<reps>.*)+/;
 
 export default function getExerciseMap(content: string) {

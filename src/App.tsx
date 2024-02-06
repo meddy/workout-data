@@ -21,7 +21,7 @@ function App() {
         console.info("Access token expired.");
         setAccessToken(null);
         setTokenExpiration(null);
-      }, tokenExpiration * 10);
+      }, tokenExpiration * 1000);
 
       return () => {
         clearTimeout(id);

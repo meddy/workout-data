@@ -11,7 +11,9 @@ export default function ExerciseHistory(props: ExerciseHistoryProps) {
       <ul className="flex flex-col space-y-4">
         {history.map((item) => (
           <li key={item.date}>
-            {item.date} - {item.workout} - {item.reps}
+            {item.workout
+              ? `${item.date} - ${item.workout} - ${item.reps}`
+              : `${item.date} - ${item.reps}`}
           </li>
         ))}
       </ul>

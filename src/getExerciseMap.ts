@@ -14,7 +14,6 @@ export default function getExerciseMap(content: string) {
   lines.forEach((line, index) => {
     const dateMatch = line.match(dateRegex);
     if (dateMatch && dateMatch[1]) {
-      console.log(dateMatch[1]);
       currentDate = dateMatch[1];
       currentWorkout = dateMatch[2];
       return;

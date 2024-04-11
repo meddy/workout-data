@@ -24,15 +24,15 @@ export default function ExerciseList(props: ExerciseListProps) {
   );
 
   useEffect(() => {
-    const savedSortType = localStorage.getItem("sortType");
-    const savedSortDirection = localStorage.getItem("sortDirection");
+    const savedSortType = localStorage.getItem("sortType") ?? "a-z";
+    const savedSortDirection = localStorage.getItem("sortDirection") ?? "asc";
     console.log("restored", savedSortType, savedSortDirection);
 
-    if (["a-z", "#", "date"].includes(savedSortType ?? "a-z")) {
+    if (["a-z", "#", "date"].includes(savedSortType)) {
       setSortType(savedSortType as SortType);
     }
 
-    if (["asc", "desc"].includes(savedSortDirection ?? "asc")) {
+    if (["asc", "desc"].includes(savedSortDirection)) {
       setSortDirection(savedSortDirection as SortDirection);
     }
   }, []);

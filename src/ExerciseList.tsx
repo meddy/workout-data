@@ -26,7 +26,6 @@ export default function ExerciseList(props: ExerciseListProps) {
   useEffect(() => {
     const savedSortType = localStorage.getItem("sortType") ?? "a-z";
     const savedSortDirection = localStorage.getItem("sortDirection") ?? "asc";
-    console.log("restored", savedSortType, savedSortDirection);
 
     if (["a-z", "#", "date"].includes(savedSortType)) {
       setSortType(savedSortType as SortType);

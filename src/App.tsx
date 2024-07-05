@@ -3,8 +3,15 @@ import { useEffect, useState, useMemo } from "react";
 import ExerciseList from "./ExerciseList";
 import getExerciseMap from "./getExerciseMap";
 import ExerciseHistory from "./ExerciseHistory";
+import { BrowserHistory } from "history";
+import isExerciseHistoryState from "./isExerciseHistoryState";
 
-function App() {
+type AppProps = {
+  history: BrowserHistory;
+};
+
+function App(props: AppProps) {
+  const { history } = props;
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [tokenExpiration, setTokenExpiration] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,6 +35,19 @@ function App() {
       };
     }
   }, [tokenExpiration]);
+
+  useEffect(() => {
+    const unlisten = history.listen(({ location }) => {
+      const historyState = location.state;
+      if (isExerciseHistoryState(historyState)) {
+        setSelectedExercise(historyState.exercise);
+      } else {
+        setSelectedExercise(null);
+      }
+    });
+
+    return unlisten;
+  }, [history]);
 
   const authorize = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/drive.readonly",
@@ -121,14 +141,18 @@ function App() {
         {!!Object.keys(exerciseMap).length && !selectedExercise && (
           <ExerciseList
             exercises={exerciseMap}
-            onSelect={(exercise) => setSelectedExercise(exercise)}
+            onSelect={(exercise) => {
+              history.push("/workout-data/", { exercise });
+            }}
           />
         )}
         {!!Object.keys(exerciseMap).length && selectedExercise && (
           <>
             <button
               className="bg-gray-500 text-white px-4 py-2 mb-4 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-              onClick={() => setSelectedExercise(null)}
+              onClick={() => {
+                history.back();
+              }}
             >
               Back
             </button>

@@ -21,6 +21,7 @@ function App(props: AppProps) {
   );
   const [documentContent, setDocumentContent] = useState<string | null>(null);
   const [selectedExercise, setSelectedExercise] = useState<string | null>(null);
+  const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
     if (tokenExpiration !== null) {
@@ -105,13 +106,13 @@ function App(props: AppProps) {
 
   return (
     <div className="flex justify-center">
-      <div className="w-full my-8 max-w-md p-8 bg-white shadow-md rounded-md">
+      <div className="w-full my-8 max-w-lg p-8 bg-white shadow-md rounded-md">
         <h1 className="text-2xl font-semibold mb-4">Workout Data</h1>
         {!selectedExercise && (
           <div className="flex items-center space-x-4 mb-4">
             <input
               type="text"
-              className="border px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"
+              className="flex-1 border px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"
               disabled={loading}
               placeholder="Enter Document ID"
               value={documentId}
@@ -144,6 +145,8 @@ function App(props: AppProps) {
             onSelect={(exercise) => {
               history.push("/workout-data/", { exercise });
             }}
+            filter={filter}
+            onFilterChange={setFilter}
           />
         )}
         {!!Object.keys(exerciseMap).length && selectedExercise && (

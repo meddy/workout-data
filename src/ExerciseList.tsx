@@ -4,6 +4,8 @@ import getExerciseMap from "./getExerciseMap";
 export interface ExerciseListProps {
   exercises: ReturnType<typeof getExerciseMap>;
   onSelect: (exercise: string) => void;
+  filter: string;
+  onFilterChange: (filter: string) => void;
 }
 
 function parseDate(date: string) {
@@ -15,9 +17,8 @@ type SortType = "a-z" | "#" | "date";
 type SortDirection = "asc" | "desc";
 
 export default function ExerciseList(props: ExerciseListProps) {
-  const { exercises, onSelect } = props;
+  const { exercises, onSelect, filter, onFilterChange } = props;
 
-  const [filter, setFilter] = useState<string>("");
   const [sortType, setSortType] = useState<SortType | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection | null>(
     null
@@ -56,7 +57,7 @@ export default function ExerciseList(props: ExerciseListProps) {
       <input
         type="text"
         value={filter}
-        onChange={(event) => setFilter(event.target.value)}
+        onChange={(event) => onFilterChange(event.target.value)}
         placeholder="Type to filter items"
         className="p-2 mb-4 border rounded-md w-full"
       />
